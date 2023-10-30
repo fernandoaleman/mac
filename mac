@@ -121,3 +121,29 @@ brew "libpq", link: true
 # Mac apps
 cask "alacritty"
 EOF
+
+update_shell() {
+  local shell_path;
+  shell_path="$(command -v fish)"
+
+  fancy_echo "Changing your shell to fish ..."
+  if ! grep "$shell_path" /etc/shells > /dev/null 2>&1 ; then
+    fancy_echo "Adding '$shell_path' to /etc/shells"
+    sudo sh -c "echo $shell_path >> /etc/shells"
+  fi
+  sudo chsh -s "$shell_path" "$USER"
+}
+
+case "$SHELL" in
+  */fish)
+    if [ "$(command -v fish)" != "$HOMEBREW_PREFIX/bin/fish" ] ; then
+      update_shell
+    fi
+    ;;
+  *)
+    update_shell
+    ;;
+esac
+
+append_to_fish_config "starship init fish | source"
+append_to_fish_config "zoxide init fish | source"
