@@ -53,7 +53,71 @@ arch="$(uname -m)"
 
 if [ "$arch" = "arm64" ]; then
   if ! pkgutil --pkg-info=com.apple.pkg.RosettaUpdateAuto > /dev/null 2>&1; then
-    fancy_echo 'Installing Rosetta ...'
+    fancy_echo "Installing Rosetta ..."
     softwareupdate --install-rosetta --agree-to-license
   fi
 fi
+
+if [ "$arch" = "arm64" ]; then
+  HOMEBREW_PREFIX="/opt/homebrew"
+else
+  HOMEBREW_PREFIX="/usr/local"
+fi
+
+if ! command -v brew >/dev/null; then
+  fancy_echo "Installing Homebrew ..."
+  /bin/bash -c \
+    "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+  # shellcheck disable=SC2016
+  append_to_fish_config "eval ($HOMEBREW_PREFIX/bin/brew shellenv)"
+
+  export PATH="$HOMEBREW_PREFIX/bin:$PATH"
+fi
+
+brew analytics off
+
+brew bundle --no-lock --file=- <<EOF
+tap "arl/arl"
+tap "homebrew/cask-fonts"
+
+# Fonts
+cask "font-jetbrains-mono-nerd-font"
+
+# Unix
+brew "bash"
+brew "curl"
+brew "fd"
+brew "fish"
+brew "fzf"
+brew "git"
+brew "gitmux"
+brew "lazygit"
+brew "lf"
+brew "nvim"
+brew "openssl"
+brew "rcm"
+brew "reattach-to-user-namespace"
+brew "ripgrep"
+brew "starship"
+brew "tmux"
+brew "wget"
+brew "zoxide"
+
+# GitHub
+brew "gh"
+
+# Programming language prerequisites and package managers
+brew "coreutils"
+brew "libyaml" # should come after openssl
+brew "readline"
+brew "yarn"
+brew "zlib"
+
+# Databases
+brew "mysql-client@5.7", link: true
+brew "libpq", link: true
+
+# Mac apps
+cask "alacritty"
+EOF
