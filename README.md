@@ -1,4 +1,4 @@
-# Mac
+# Mac [![Test Status](https://img.shields.io/github/actions/workflow/status/fernandoaleman/mac/test.yml?branch=master&label=tests)](https://github.com/fernandoaleman/mac/actions/workflows/test.yml)
 
 Mac is a script to set up macOS for web development.
 
