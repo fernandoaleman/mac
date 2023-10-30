@@ -1,0 +1,50 @@
+#!/bin/sh
+# ft=shell
+
+# shellcheck disable=SC3043
+
+fancy_echo() {
+  local fmt="$1"; shift
+
+  # shellcheck disable=SC2059
+  printf "\\n$fmt\\n" "$@"
+}
+
+append_to_fish_config() {
+  local text="$1" fish_config
+  local skip_new_line="${2:-0}"
+
+  if [ -w "$HOME/.config/fish/config.fish.local" ]; then
+    fish_config="$HOME/.config/fish/config.fish.local"
+  else
+    fish_config="$HOME/.config/fish/config.fish"
+  fi
+
+  if ! grep -Fqs "$text" "$fish_config"; then
+    if [ "$skip_new_line" -eq 1 ]; then
+      printf "%s\\n" "$text" >> "$fish_config"
+    else
+      printf "\\n%s\\n" "$text" >> "$fish_config"
+    fi
+  fi
+}
+
+# shellcheck disable=SC2154
+trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
+
+set -e
+
+if [ ! -d "$HOME/.config/fish" ]; then
+  mkdir -p "$HOME/.config/fish"
+fi
+
+if [ ! -f "$HOME/.config/fish/config.fish" ]; then
+  touch "$HOME/.config/fish/config.fish"
+fi
+
+if [ ! -d "$HOME/.config/bin/" ]; then
+  mkdir "$HOME/.config/bin"
+fi
+
+# shellcheck disable=SC2016
+append_to_fish_config 'fish_add_path $HOME/.config/bin'
