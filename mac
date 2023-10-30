@@ -163,3 +163,57 @@ fi
 if [ ! -d "$HOME/.config/alacritty/catppuccin" ]; then
   git clone "https://github.com/catppuccin/alacritty.git" "$HOME/.config/alacritty/catppuccin"
 fi
+
+if [ ! -d "$HOME/.asdf" ]; then
+  fancy_echo "Installing asdf version manager ..."
+  brew install asdf
+
+  append_to_fish_config "source (brew --prefix asdf)/libexec/asdf.fish"
+fi
+
+alias install_asdf_plugin=add_or_update_asdf_plugin
+add_or_update_asdf_plugin() {
+  local name="$1"
+  local url="$2"
+
+  if ! asdf plugin-list | grep -Fq "$name"; then
+    asdf plugin-add "$name" "$url"
+  else
+    asdf plugin-update "$name"
+  fi
+}
+
+install_asdf_language() {
+  local language="$1"
+  local version
+  version="$(asdf list-all "$language" | grep -v "[a-z]" | tail -1)"
+
+  if ! asdf list "$language" | grep -Fq "$version"; then
+    asdf install "$language" "$version"
+    asdf global "$language" "$version"
+  fi
+}
+
+gem_install_or_update() {
+  if gem list "$1" --installed > /dev/null; then
+    gem update "$@"
+  else
+    gem install "$@"
+  fi
+}
+
+# shellcheck disable=SC1091
+. "$(brew --prefix asdf)/libexec/asdf.sh"
+
+add_or_update_asdf_plugin "ruby" "https://github.com/asdf-vm/asdf-ruby.git"
+
+fancy_echo "Installing latest Ruby ..."
+install_asdf_language "ruby"
+gem update --system
+number_of_cores=$(sysctl -n hw.ncpu)
+bundle config --global jobs $((number_of_cores - 1))
+
+add_or_update_asdf_plugin "nodejs" "https://github.com/asdf-vm/asdf-nodejs.git"
+
+fancy_echo "Installing latest Node ..."
+install_asdf_language "nodejs"
