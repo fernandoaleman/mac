@@ -147,3 +147,11 @@ esac
 
 append_to_fish_config "starship init fish | source"
 append_to_fish_config "zoxide init fish | source"
+
+if [ ! -d "$HOME/.config/tmux/plugins" ]; then
+  mkdir -p "$HOME/.config/tmux/plugins"
+fi
+
+if [ ! -d "$HOME/.config/tmux/plugins/tpm" ]; then
+  git clone "https://github.com/tmux-plugins/tpm" "$HOME/.config/tmux/plugins/tpm"
+fi
