@@ -155,3 +155,11 @@ fi
 if [ ! -d "$HOME/.config/tmux/plugins/tpm" ]; then
   git clone "https://github.com/tmux-plugins/tpm" "$HOME/.config/tmux/plugins/tpm"
 fi
+
+if [ ! -d "$HOME/.config/alacritty" ]; then
+  mkdir "$HOME/.config/alacritty"
+fi
+
+if [ ! -d "$HOME/.config/alacritty/catppuccin" ]; then
+  git clone "https://github.com/catppuccin/alacritty.git" "$HOME/.config/alacritty/catppuccin"
+fi
