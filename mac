@@ -107,6 +107,9 @@ brew "zoxide"
 # GitHub
 brew "gh"
 
+# Image manipulation
+brew "imagemagick"
+
 # Programming language prerequisites and package managers
 brew "coreutils"
 brew "libyaml" # should come after openssl
