@@ -16,8 +16,7 @@ upgrades packages based on what is already installed.
 Download the script:
 
 ```sh
-curl --remote-name
-https://raw.githubusercontent.com/fernandoaleman/mac/master/mac
+curl --remote-name https://raw.githubusercontent.com/fernandoaleman/mac/master/mac
 ```
 
 Run the script:
