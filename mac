@@ -48,3 +48,12 @@ fi
 
 # shellcheck disable=SC2016
 append_to_fish_config 'fish_add_path $HOME/.config/bin'
+
+arch="$(uname -m)"
+
+if [ "$arch" = "arm64" ]; then
+  if ! pkgutil --pkg-info=com.apple.pkg.RosettaUpdateAuto > /dev/null 2>&1; then
+    fancy_echo 'Installing Rosetta ...'
+    softwareupdate --install-rosetta --agree-to-license
+  fi
+fi
