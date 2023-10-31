@@ -242,6 +242,8 @@ add_or_update_asdf_plugin "nodejs" "https://github.com/asdf-vm/asdf-nodejs.git"
 fancy_echo "Installing latest Node ..."
 install_asdf_language "nodejs"
 
+npm i changelog-maker -g
+
 # Enable menu bar auto hide
 defaults write NSGlobalDomain _HIHideMenuBar -bool true
 
