@@ -92,15 +92,21 @@ brew "fish"
 brew "fzf"
 brew "git"
 brew "gitmux"
+brew "jq"
 brew "lazygit"
 brew "lf"
+brew "ncdu"
+brew "nmap"
 brew "nvim"
 brew "openssl"
 brew "rcm"
 brew "reattach-to-user-namespace"
 brew "ripgrep"
+brew "shellcheck"
 brew "starship"
+brew "tldr"
 brew "tmux"
+brew "tree"
 brew "wget"
 brew "zoxide"
 
@@ -109,6 +115,9 @@ brew "gh"
 
 # Image manipulation
 brew "imagemagick"
+
+# PDF Rendering
+cask "wkhtmltopdf"
 
 # Programming language prerequisites and package managers
 brew "coreutils"
@@ -121,8 +130,20 @@ brew "zlib"
 brew "mysql-client@5.7", link: true
 brew "libpq", link: true
 
+# Chef
+cask "chef-workstation"
+
 # Mac apps
+cask "1password"
 cask "alacritty"
+cask "appcleaner"
+cask "docker"
+cask "google-chrome"
+cask "flycut"
+cask "macx-youtube-downloader"
+cask "rectangle"
+cask "reflex"
+cask "slack"
 EOF
 
 update_shell() {
