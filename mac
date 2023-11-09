@@ -139,6 +139,7 @@ cask "1password"
 cask "alacritty"
 cask "appcleaner"
 cask "docker"
+cask "espanso"
 cask "google-chrome"
 cask "flycut"
 cask "macx-youtube-downloader"
@@ -187,6 +188,14 @@ fi
 
 if [ ! -d "$HOME/.config/alacritty/catppuccin" ]; then
   git clone "https://github.com/catppuccin/alacritty.git" "$HOME/.config/alacritty/catppuccin"
+fi
+
+if [ ! -d "$HOME/.config/espanso" ]; then
+  mkdir "$HOME/.config/espanso"
+fi
+
+if [ ! -d "$HOME/Library/Application Support/espanso" ] && [ ! -L "$HOME/Library/Application Support/espanso" ]; then
+  ln -s "$HOME/.config/espanso" "$HOME/Library/Application Support/espanso"
 fi
 
 if [ ! -d "$HOME/.asdf" ]; then
